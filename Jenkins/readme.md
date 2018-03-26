@@ -58,25 +58,25 @@ terraform apply -var vpc_id=$VPC_ID -var subnet_id=$SUBNET_ID
 
 * Warning (top red box) on first startup
 
-![Unsecure](../master/Jenkins/img/unsecure.jpg)
+![Unsecure](../Jenkins/img/unsecure.jpg)
 
 
 * Enabling Security
 
-![Enable Security](../master/Jenkins/img/secure1.jpg)
+![Enable Security](../Jenkins/img/secure1.jpg)
 
 
 * Update admin account
 
-![Update admin account](../master/Jenkins/img/manage_admin_user.jpg)
+![Update admin account](../Jenkins/img/manage_admin_user.jpg)
 
 
 * Change admin password
 
-![Set admin password](../master/Jenkins/img/set_admin_password.jpg)
+![Set admin password](../Jenkins/img/set_admin_password.jpg)
 
 
 * Back to security tab, only allow logged-in users
 
-![Allow only logged-in users](../master/Jenkins/img/secure2.jpg)
+![Allow only logged-in users](../Jenkins/img/secure2.jpg)
 

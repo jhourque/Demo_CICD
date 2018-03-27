@@ -1,5 +1,5 @@
 resource "aws_dynamodb_table" "ddb" {
-    name            =  "ddb_table_demo"
+    name            =  "ddb_table_demo-${var.branch}"
     read_capacity   =  "100"
     write_capacity  =  "100"
     hash_key        =  "lastname"

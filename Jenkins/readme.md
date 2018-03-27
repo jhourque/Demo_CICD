@@ -25,7 +25,7 @@ sudo install /tmp/packer /usr/bin
 * Set ssh key for keypair
 
 ```sh
-ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa.iac
+ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa.jenkins
 ```
 
 * Set AWS credentials, region, vpc_id & subnet_id to use

@@ -42,7 +42,7 @@ data "aws_ami" "iac-jenkins" {
 
 resource "aws_key_pair" "iac_keypair" {
   key_name   = "iac_keypair"
-  public_key = "${file("~/.ssh/id_rsa.iac.pub")}"
+  public_key = "${file("~/.ssh/id_rsa.jenkins.pub")}"
 }
 
 resource "aws_instance" "jenkins" {

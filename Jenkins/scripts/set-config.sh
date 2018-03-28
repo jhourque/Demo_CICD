@@ -9,7 +9,7 @@ cd -
 
 if [ ! -f jenkins-cli.jar ]
 then 
-	wget $URL/jnlpJars/jenkins-cli.jar
+	wget $JENKINS_URL/jnlpJars/jenkins-cli.jar
 fi
 
 SSH_PUB=$(cat ~/.ssh/id_rsa.jenkins.pub)

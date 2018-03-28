@@ -139,14 +139,26 @@ resource "aws_instance" "front" {
   user_data              = "${data.template_file.userdata.rendered}"
   iam_instance_profile   = "${aws_iam_instance_profile.web_instance_profile.id}"
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  connection {
+    user = "ubuntu"
+	private_key = "${file("~/.ssh/id_rsa.demo")}"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "while [ ! -f /tmp/signal ]; do sleep 2; done"
+    ]
+  }
+
   tags {
     Name = "front${count.index}"
   }
 }
 
 resource "aws_elb" "front" {
-  # TO DO
-  # see https://www.terraform.io/docs/providers/aws/r/elb.html
   name            = "${var.project_name}-elb"
   subnets         = ["${aws_subnet.public.*.id}"]
   security_groups = ["${aws_security_group.elb.id}"]
@@ -166,6 +178,7 @@ resource "aws_elb" "front" {
     interval            = 5
   }
   instances = ["${aws_instance.front.*.id}"]
+
 }
 
 ### Outputs

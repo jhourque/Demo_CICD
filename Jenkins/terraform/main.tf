@@ -1,6 +1,6 @@
 resource "aws_security_group" "sg_jenkins" {
-    name        = "allow_http"
-    description = "Allow http inbound traffic"
+    name        = "allow_jenkins"
+    description = "Allow http ssh & sshD inbound traffic"
     vpc_id = "${var.vpc_id}"
     
     ingress {
@@ -15,6 +15,12 @@ resource "aws_security_group" "sg_jenkins" {
         protocol    = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
+    ingress {
+        from_port   = 50022
+        to_port     = 50022
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
     egress {
         from_port   = 0
         to_port     = 0
@@ -24,7 +30,7 @@ resource "aws_security_group" "sg_jenkins" {
 }
 
 
-data "aws_ami" "iac-jenkins" {
+data "aws_ami" "jenkins" {
   most_recent = true
 
   filter {
@@ -40,20 +46,20 @@ data "aws_ami" "iac-jenkins" {
   owners = ["self"]
 }
 
-resource "aws_key_pair" "iac_keypair" {
-  key_name   = "iac_keypair"
+resource "aws_key_pair" "keypair" {
+  key_name   = "jenkins_keypair"
   public_key = "${file("~/.ssh/id_rsa.jenkins.pub")}"
 }
 
 resource "aws_instance" "jenkins" {
-  ami                    = "${data.aws_ami.iac-jenkins.id}"
+  ami                    = "${data.aws_ami.jenkins.id}"
   instance_type          = "t2.micro"
-  key_name               = "${aws_key_pair.iac_keypair.id}"
+  key_name               = "${aws_key_pair.keypair.id}"
   vpc_security_group_ids = ["${aws_security_group.sg_jenkins.id}"]
   subnet_id              = "${var.subnet_id}"
 
   tags {
-    Name = "iac_jenkins"
+    Name = "jenkins"
   }
 }
 

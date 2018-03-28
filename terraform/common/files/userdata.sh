@@ -32,3 +32,5 @@ echo "ddbtable=${TABLE}" > /tmp/application.properties
 echo "region=${REGION}" >> /tmp/application.properties
 
 docker run -d -p 8080:80 -v /tmp/application.properties:/var/www/html/application.properties ${REPO}
+
+touch /tmp/signal

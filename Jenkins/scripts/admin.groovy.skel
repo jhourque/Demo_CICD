@@ -1,0 +1,24 @@
+#!groovy
+
+import jenkins.model.*
+import hudson.security.*
+
+def instance = Jenkins.getInstance()
+
+def hudsonRealm = new HudsonPrivateSecurityRealm(false)
+
+def user = hudsonRealm.createAccount("admin","password4admin")
+user.addProperty(new org.jenkinsci.main.modules.cli.auth.ssh.UserPropertyImpl("SSH_PUB"))
+instance.setSecurityRealm(hudsonRealm)
+instance.save()
+
+def strategy = new hudson.security.FullControlOnceLoggedInAuthorizationStrategy()
+strategy.setAllowAnonymousRead(false)
+instance.setAuthorizationStrategy(strategy)
+instance.save()
+
+def sshDesc = instance.getDescriptor("org.jenkinsci.main.modules.sshd.SSHD")
+sshDesc.setPort(50022)
+sshDesc.getActualPort()
+sshDesc.save()
+
